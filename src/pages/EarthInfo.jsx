@@ -13,26 +13,32 @@ export default function EarthInfo() {
   return (
     <div
       style={{
-        position: 'fixed',
-        height: '100vh',
+        minHeight: '100vh',
         width: '100vw',
-        backgroundImage: `url('/textures/bg1.jpg')`, 
+        backgroundImage: `url('/textures/bg1.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem',
+        justifyContent: 'flex-start',
+        padding: '2rem 1rem',
         color: 'white',
         textAlign: 'center',
-        overflow: 'hidden'
+        overflowY: 'auto',
+        boxSizing: 'border-box',
       }}
     >
-      <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-      NASA EPIC Earth View
+      <h1
+        style={{
+          fontSize: '6vw',
+          marginBottom: '1rem',
+          maxWidth: '90%',
+          wordWrap: 'break-word',
+        }}
+      >
+        NASA EPIC Earth View
       </h1>
 
       {epicData ? (
@@ -41,14 +47,20 @@ export default function EarthInfo() {
             src={epicData.imageUrl}
             alt="Earth from NASA EPIC"
             style={{
-              width: '55%',
+              width: '90vw',
               maxWidth: '600px',
+              height: 'auto',
               borderRadius: '10px',
               boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+              objectFit: 'contain',
             }}
           />
-          <p style={{ marginTop: '1rem', fontSize: '1rem' }}>{epicData.caption}</p>
-          <p><strong>Date:</strong> {epicData.date}</p>
+          <p style={{ marginTop: '1rem', fontSize: '1rem', lineHeight: '1.6' }}>
+            {epicData.caption}
+          </p>
+          <p style={{ fontSize: '0.9rem' }}>
+            <strong>Date:</strong> {epicData.date}
+          </p>
         </>
       ) : (
         <p style={{ fontSize: '1.2rem' }}>Loading image...</p>

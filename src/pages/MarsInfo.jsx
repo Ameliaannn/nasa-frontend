@@ -15,7 +15,7 @@ export default function MarsInfo() {
 
     fetch('https://nasa-backend-tm30.onrender.com/api/mars/photos')
       .then(res => res.json())
-      .then(data => setPhotos(data.slice(0, 3))) 
+      .then(data => setPhotos(data.slice(0, 3)))
       .catch(err => console.error('Failed to fetch Mars photos:', err))
   }, [])
 
@@ -32,34 +32,47 @@ export default function MarsInfo() {
   return (
     <div
       style={{
+        minHeight: '100vh',
+        width: '100vw',
         backgroundImage: 'url("/textures/car.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
-        height: '90vh',
-        weight: '180vh',
-        padding: '2rem',
+        padding: '2rem 1rem',
+        boxSizing: 'border-box',
         color: 'white',
-        width: '100vw', 
-        overflow: 'hidden',
+        overflowX: 'hidden',
+        overflowY: 'auto',
       }}
     >
-      <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Mars Overview</h1>
+      <h1
+        style={{
+          textAlign: 'center',
+          marginBottom: '2rem',
+          fontSize: '6vw',
+          maxWidth: '100%',
+          wordWrap: 'break-word',
+        }}
+      >
+        Mars Overview
+      </h1>
 
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          margin: '0 auto', 
-          flexWrap: 'wrap',
+          flexDirection: 'column',
           gap: '2rem',
+          alignItems: 'center',
+          justifyContent: 'center',
+          maxWidth: '1200px',
+          margin: '0 auto',
         }}
       >
-
         {info && (
           <div
             style={{
+              width: '100%',
               maxWidth: '600px',
               padding: '1.5rem',
               backgroundColor: 'rgba(255, 255, 255, 0.2)',
@@ -69,7 +82,6 @@ export default function MarsInfo() {
               border: '1px solid rgba(255, 255, 255, 0.3)',
               lineHeight: '1.8',
               fontSize: '1rem',
-              flex: '1 1 45%',
             }}
           >
             <p><strong>Name:</strong> {info.name}</p>
@@ -79,21 +91,20 @@ export default function MarsInfo() {
           </div>
         )}
 
-
         {photos.length > 0 && (
-          <div
-            style={{
-              maxWidth: '600px',
-              flex: '1 1 45%',
-            }}
-          >
+          <div style={{ width: '100%', maxWidth: '600px' }}>
             <Slider {...sliderSettings}>
               {photos.map((photo, index) => (
                 <div key={index}>
                   <img
                     src={photo.img_src}
                     alt={`Mars rover ${index}`}
-                    style={{ width: '100%', borderRadius: '12px', maxHeight: '500px', objectFit: 'cover' }}
+                    style={{
+                      width: '100%',
+                      borderRadius: '12px',
+                      maxHeight: '500px',
+                      objectFit: 'cover',
+                    }}
                   />
                 </div>
               ))}

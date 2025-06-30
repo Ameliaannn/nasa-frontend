@@ -24,10 +24,7 @@ function RotatingPlanets({ setFullText }) {
         position={[24, 0, 0]}
         texturePath="/textures/home.jpg"
         size={5}
-        onClick={() => {
-
-          navigate('/nasadata')
-        }}
+        onClick={() => navigate('/nasadata')}
       />
 
       {/* Earth */}
@@ -35,9 +32,7 @@ function RotatingPlanets({ setFullText }) {
         <Planet
           size={6}
           texturePath="/textures/earth.jpg"
-          onClick={() => {
-            window.location.href = '/earth'
-          }}
+          onClick={() => window.location.href = '/earth'}
         />
       </group>
 
@@ -55,10 +50,7 @@ function RotatingPlanets({ setFullText }) {
         <Planet
           size={6}
           texturePath="/textures/mars.jpg"
-          onClick={() => {
-           
-            window.location.href = '/mars'
-          }}
+          onClick={() => window.location.href = '/mars'}
         />
       </group>
     </>
@@ -80,15 +72,13 @@ export default function SolarSystem() {
     }
   }, [i, fullText])
 
- 
   useEffect(() => {
     setDialogue('')
     setI(0)
   }, [fullText])
 
   return (
-    <div className="h-screen w-screen relative">
-
+    <div className="w-screen h-screen relative overflow-hidden">
       <div
         style={{
           position: 'absolute',
@@ -99,18 +89,18 @@ export default function SolarSystem() {
           color: 'white',
           padding: '16px 24px',
           borderRadius: '12px',
-          fontSize: '18px',
-          maxWidth: '80%',
+          fontSize: 'clamp(12px, 3vw, 18px)', 
+          maxWidth: '90vw', 
           zIndex: 10,
           boxShadow: '0 0 10px rgba(0,0,0,0.5)',
           whiteSpace: 'pre-wrap',
+          textAlign: 'center',
         }}
       >
-        
         {dialogue}
-
-        
       </div>
+
+
       <p
         style={{
           position: 'absolute',
@@ -118,7 +108,9 @@ export default function SolarSystem() {
           left: '50%',
           transform: 'translateX(-50%)',
           color: 'rgba(255,255,255,0.6)',
-          fontSize: '14px',
+          fontSize: 'clamp(10px, 2vw, 14px)', 
+          textAlign: 'center',
+          maxWidth: '90vw',
           zIndex: 10,
         }}
       >
@@ -130,7 +122,6 @@ export default function SolarSystem() {
         <OrbitControls />
         <RotatingPlanets setFullText={setFullText} />
       </Canvas>
-      
     </div>
   )
 }
