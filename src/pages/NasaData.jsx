@@ -9,18 +9,15 @@ export default function NasaData() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    //console.log('当前选中日期：', selectedDate)
     setLoading(true)
     setError(false)
 
-    //fetch(`http://localhost:5000/api/asteroids?date=${selectedDate}`)
     fetch(`${import.meta.env.VITE_API_BASE_URL}/api/asteroids?date=${selectedDate}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch')
         return res.json()
       })
       .then(data => {
-        //console.log('返回的数据：', data)
         setAsteroids(data || [])
         if (!data || data.length === 0) setError(true)
         setLoading(false)
@@ -49,69 +46,71 @@ export default function NasaData() {
 
       {loading ? (
         <p style={{ textAlign: 'center' }}>Loading...</p>
-      ) : error ? (
-        <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '2rem' }}>
-          😢 The data has gone out. Please try again on a different date.
-        </p>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '2rem',
-            marginTop: '1rem',
-            justifyContent: 'center',
-          }}
-        >
-
-          <div style={{ flex: '1 1 100%', maxWidth: '1000px', overflowX: 'auto' }}>
-            <table
+        <>
+          {error ? (
+            <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '2rem' }}>
+              😢 The data has gone out. Please try again on a different date.
+            </p>
+          ) : (
+            <div
               style={{
-                width: '100%',
-                minWidth: '600px',
-                borderCollapse: 'collapse',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                borderRadius: '12px',
-                overflow: 'hidden',
-                backdropFilter: 'blur(8px)',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '2rem',
+                marginTop: '1rem',
+                justifyContent: 'center',
               }}
             >
-              <thead>
-                <tr style={{ backgroundColor: '#222' }}>
-                  <th style={thStyle}>ID</th>
-                  <th style={thStyle}>Name</th>
-                  <th style={thStyle}>Magnitude</th>
-                  <th style={thStyle}>Potential Hazard</th>
-                  <th style={thStyle}>Date of Closest Approach</th>
-                </tr>
-              </thead>
-              <tbody>
-                {asteroids.map((asteroid, index) => (
-                  <tr key={asteroid.neo_id || `row-${index}`} style={{ borderBottom: '1px solid #555' }}>
-                    <td style={tdStyle}>{asteroid.neo_id ?? 'N/A'}</td>
-                    <td style={tdStyle}>{asteroid.name ?? 'Unknown'}</td>
-                    <td style={{ ...tdStyle, textAlign: 'right' }}>{asteroid.magnitude ?? '—'}</td>
-                    <td
-                      style={{
-                        ...tdStyle,
-                        textAlign: 'center',
-                        color: asteroid.is_hazardous ? 'red' : 'lightgreen',
-                      }}
+              <div style={{ flex: '1 1 100%', maxWidth: '1000px', overflowX: 'auto' }}>
+           <table
+              style={{
+              width: '100%',                        
+              maxWidth: '1000px',                  
+              margin: '0 auto',                    
+              borderCollapse: 'collapse',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderRadius: '12px',
+              backdropFilter: 'blur(8px)',
+                          }}
                     >
-                      {asteroid.is_hazardous ? 'YES' : 'NO'}
-                    </td>
-                    <td style={tdStyle}>{asteroid.approach_date ?? '—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                  <thead>
+                    <tr style={{ backgroundColor: '#222' }}>
+                      <th style={thStyle}>ID</th>
+                      <th style={thStyle}>Name</th>
+                      <th style={thStyle}>Magnitude</th>
+                      <th style={thStyle}>Potential Hazard</th>
+                      <th style={thStyle}>Date of Closest Approach</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {asteroids.map((asteroid, index) => (
+                      <tr key={asteroid.neo_id || `row-${index}`} style={{ borderBottom: '1px solid #555' }}>
+                        <td style={tdStyle}>{asteroid.neo_id ?? 'N/A'}</td>
+                        <td style={tdStyle}>{asteroid.name ?? 'Unknown'}</td>
+                        <td style={{ ...tdStyle, textAlign: 'right' }}>{asteroid.magnitude ?? '—'}</td>
+                        <td
+                          style={{
+                            ...tdStyle,
+                            textAlign: 'center',
+                            color: asteroid.is_hazardous ? 'red' : 'lightgreen',
+                          }}
+                        >
+                          {asteroid.is_hazardous ? 'YES' : 'NO'}
+                        </td>
+                        <td style={tdStyle}>{asteroid.approach_date ?? '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
 
-
-          <div style={{ flex: '1 1 100%', maxWidth: '1000px' }}>
-            <AsteroidSizeChart asteroids={asteroids} />
+          <div style={{ width: '100%' }}>
+            <AsteroidSizeChart />
           </div>
-        </div>
+        </>
       )}
     </div>
   )
