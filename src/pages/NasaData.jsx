@@ -9,7 +9,7 @@ export default function NasaData() {
   const [error, setError] = useState(false)
 
   useEffect(() => {
-    console.log('当前选中日期：', selectedDate)
+    //console.log('当前选中日期：', selectedDate)
     setLoading(true)
     setError(false)
 
@@ -20,7 +20,7 @@ export default function NasaData() {
         return res.json()
       })
       .then(data => {
-        console.log('返回的数据：', data)
+        //console.log('返回的数据：', data)
         setAsteroids(data || [])
         if (!data || data.length === 0) setError(true)
         setLoading(false)
@@ -37,7 +37,6 @@ export default function NasaData() {
     <div style={{ padding: '2rem', color: 'white' }}>
       <h1 style={{ textAlign: 'center' }}>Near Earth Asteroids</h1>
 
-      {/* 日期选择器 */}
       <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
         <label style={{ marginRight: '0.5rem' }}>Select Date:</label>
         <input
@@ -52,7 +51,7 @@ export default function NasaData() {
         <p style={{ textAlign: 'center' }}>Loading...</p>
       ) : error ? (
         <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '2rem' }}>
-          😢 数据暂时出走了，请换个日期再试试～
+          😢 The data has gone out. Please try again on a different date.
         </p>
       ) : (
         <div
@@ -64,7 +63,7 @@ export default function NasaData() {
             justifyContent: 'center',
           }}
         >
-          {/* 表格部分 */}
+
           <div style={{ flex: '1 1 100%', maxWidth: '1000px', overflowX: 'auto' }}>
             <table
               style={{
@@ -108,7 +107,7 @@ export default function NasaData() {
             </table>
           </div>
 
-          {/* 图表部分 */}
+
           <div style={{ flex: '1 1 100%', maxWidth: '1000px' }}>
             <AsteroidSizeChart asteroids={asteroids} />
           </div>
